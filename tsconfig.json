@@ -1,0 +1,17 @@
+{
+  "extends": "@adonisjs/tsconfig/tsconfig.app.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "./build",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "types": ["@adonisjs/core", "@adonisjs/bodyparser"],
+    "paths": {
+      "@ioc:Adonis/*": ["node_modules/@adonisjs/*/build/adonis-types"]
+    }
+  }
+}
