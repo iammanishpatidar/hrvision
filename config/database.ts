@@ -12,28 +12,11 @@ const dbConfig = defineConfig({
         user: env.get('DB_USER'),
         password: env.get('DB_PASSWORD'),
         database: env.get('DB_DATABASE'),
-        // Connection timeout settings
-        connectionTimeoutMillis: 30000, // 30 seconds
-        idleTimeoutMillis: 30000, // 30 seconds
-        // Keep alive settings
-        keepAlive: true,
-        keepAliveInitialDelayMillis: 0,
       },
-      // Connection pool settings
       pool: {
         min: 2,
         max: 10,
-        acquireTimeoutMillis: 30000, // 30 seconds
-        createTimeoutMillis: 30000, // 30 seconds
-        destroyTimeoutMillis: 5000, // 5 seconds
-        idleTimeoutMillis: 30000, // 30 seconds
-        reapIntervalMillis: 1000, // 1 second
-        createRetryIntervalMillis: 200, // 200ms
-        // Connection validation
-        propagateCreateError: false,
       },
-      // Retry and error handling
-      acquireConnectionTimeout: 30000,
       healthCheck: false,
       debug: env.get('NODE_ENV') === 'development',
       migrations: {

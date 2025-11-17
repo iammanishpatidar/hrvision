@@ -1,25 +1,25 @@
-import { BaseModel, column, belongsTo,hasMany,hasOne} from '@adonisjs/lucid/orm'
-import DocumentCategory from '../documentCategory/documentCategory.model.js'
-import * as relations from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm';
+import type { BelongsTo } from '@adonisjs/lucid/types/relations';
+import DocumentCategory from '../documentCategory/documentCategory.model.js';
 
 export default class DocumentFolderModel extends BaseModel {
-   public static table = 'document_folders'
+  public static table = 'document_folders';
+
   @column({ isPrimary: true })
-declare id: string
+  declare id: string;
 
   @column()
-  declare name: string
+  declare name: string;
 
   @column()
-  declare description: string
+  declare description: string;
 
-  @column()
-  declare documentPath: string
+  @column({ columnName: 'document_path' })
+  declare documentPath: string;
 
-  @column()
-  declare categoryId: string
+  @column({ columnName: 'category_id' })
+  declare categoryId: string;
 
-  
   @belongsTo(() => DocumentCategory, { foreignKey: 'category_id' })
-  declare category: relations.BelongsTo<typeof DocumentCategory>
+  declare category: BelongsTo<typeof DocumentCategory>;
 }

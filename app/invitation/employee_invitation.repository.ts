@@ -16,13 +16,19 @@ export default class EmployeeInvitationRepository {
       .first();
   }
 
-  async findByEmail(email: string, businessId?: string): Promise<EmployeeInvitation | null> {
-    const query = EmployeeInvitation.query().where('email', email);
-    
-    if (businessId) {
-      query.where('business_id', businessId);
-    }
-    
+  async findByEmail(
+    email: string,
+    businessId?: string
+  ): Promise<EmployeeInvitation | null> {
+    const query = EmployeeInvitation.query()
+      .preload('employee')
+      .whereHas('employee', (employeeQuery) => {
+        employeeQuery.where('email', email);
+        if (businessId) {
+          employeeQuery.andWhere('business_id', businessId);
+        }
+      });
+
     return await query.first();
   }
 
@@ -53,10 +59,18 @@ export default class EmployeeInvitationRepository {
     limit: number = 10
   ): Promise<ModelPaginatorContract<EmployeeInvitation>> {
     return await EmployeeInvitation.query()
-      .preload('business')
-      .preload('admin')
-      .preload('department')
-      .where('business_id', businessId)
+      .preload('employee', (employeeQuery) => {
+        employeeQuery
+          .preload('business')
+          .preload('department')
+          .preload('role');
+      })
+      .preload('admin', (adminQuery) => {
+        adminQuery.preload('business').preload('department');
+      })
+      .whereHas('employee', (employeeQuery) => {
+        employeeQuery.where('business_id', businessId);
+      })
       .orderBy('created_at', 'desc')
       .paginate(page, limit);
   }
@@ -68,11 +82,19 @@ export default class EmployeeInvitationRepository {
     limit: number = 10
   ): Promise<any> {
     return await EmployeeInvitation.query()
-      .preload('business')
-      .preload('admin')
-      .preload('department')
-      .where('business_id', businessId)
+      .preload('employee', (employeeQuery) => {
+        employeeQuery
+          .preload('business')
+          .preload('department')
+          .preload('role');
+      })
+      .preload('admin', (adminQuery) => {
+        adminQuery.preload('business').preload('department');
+      })
       .where('status', status)
+      .whereHas('employee', (employeeQuery) => {
+        employeeQuery.where('business_id', businessId);
+      })
       .orderBy('created_at', 'desc')
       .paginate(page, limit);
   }

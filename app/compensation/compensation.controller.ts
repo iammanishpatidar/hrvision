@@ -1,6 +1,9 @@
 import { HttpContext } from '@adonisjs/core/http';
 import CompensationService from './compensation.service.js';
-import { customError } from '../../utilities/error_handler.js';
+import {
+  commonRequestErrorHandler,
+  customError,
+} from '../../utilities/error_handler.js';
 import { genericResponse } from '../../utilities/response_handler.js';
 import CompensationValidator from './compensation.validator.js';
 import Compensation from './compensation.model.js';
@@ -55,7 +58,12 @@ export default class CompensationController {
         message: 'Compensations fetched successfully by employee',
       });
     } catch (error) {
-      return customError(
+      const statusCode = error.statusCode || 500;
+      const errorMessage =
+        error.message ||
+        error.errorMessage ||
+        'Failed to fetch compensations for the employee';
+      return commonRequestErrorHandler(
         { request, response },
         errorMessage,
         statusCode,
@@ -78,7 +86,8 @@ export default class CompensationController {
       });
     } catch (error) {
       const statusCode = error.statusCode || 500;
-      const errorMessage = error.message || error.errorMessage;
+      const errorMessage =
+        error.message || error.errorMessage || 'Failed to fetch compensation';
       return commonRequestErrorHandler(
         { request, response },
         errorMessage,
@@ -113,7 +122,8 @@ export default class CompensationController {
       });
     } catch (error) {
       const statusCode = error.statusCode || 500;
-      const errorMessage = error.message || error.errorMessage;
+      const errorMessage =
+        error.message || error.errorMessage || 'Failed to update compensation';
       return commonRequestErrorHandler(
         { request, response },
         errorMessage,
@@ -137,7 +147,8 @@ export default class CompensationController {
       });
     } catch (error) {
       const statusCode = error.statusCode || 500;
-      const errorMessage = error.message || error.errorMessage;
+      const errorMessage =
+        error.message || error.errorMessage || 'Failed to delete compensation';
       return commonRequestErrorHandler(
         { request, response },
         errorMessage,

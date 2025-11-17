@@ -1,0 +1,10 @@
+node_modules
+tmp
+dist
+build
+.git
+.github
+docs/env.example
+tests
+npm-debug.log
+

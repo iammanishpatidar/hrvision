@@ -2,7 +2,6 @@ import { commonRequestErrorHandler } from '../../utilities/error_handler.js';
 import { genericResponse } from '../../utilities/response_handler.js';
 import { HttpContext } from '@adonisjs/core/http';
 import DepartmentService from './department.service.js';
-import { identity } from 'lodash';
 // import departmentValidator from './department.validator.js';
 
 
