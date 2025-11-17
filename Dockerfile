@@ -50,5 +50,5 @@ COPY --from=builder /home/node/app/swagger.json ./swagger.json
 
 EXPOSE 3333
 
-CMD ["node", "build/server.js"]
+CMD ["node", "build/bin/server.js"]
 

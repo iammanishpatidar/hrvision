@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: hrms-backend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3333
+      # Add other required environment variables in Render dashboard
+      # DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE
+      # APP_KEY, JWKS_URL, CLERK_SIGNUP_URL, etc.
+
