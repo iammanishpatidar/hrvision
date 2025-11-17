@@ -17,7 +17,6 @@ const dbConfig = defineConfig({
         min: 2,
         max: 10,
       },
-      healthCheck: false,
       debug: env.get('NODE_ENV') === 'development',
       migrations: {
         naturalSort: true,
