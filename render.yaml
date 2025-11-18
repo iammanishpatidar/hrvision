@@ -8,7 +8,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 3333
+        value: 4000
       # Add other required environment variables in Render dashboard
       # DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE
       # APP_KEY, JWKS_URL, CLERK_SIGNUP_URL, etc.

@@ -48,7 +48,7 @@ RUN npm ci --omit=dev
 COPY --from=builder /home/node/app/build ./build
 COPY --from=builder /home/node/app/swagger.json ./swagger.json
 
-EXPOSE 3333
+EXPOSE 4000
 
 CMD ["node", "build/bin/server.js"]
 

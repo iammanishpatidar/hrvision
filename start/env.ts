@@ -42,9 +42,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   JWKS_URL: Env.schema.string(),
-  CLERK_SIGNUP_URL: Env.schema.string(),
-  INVITATION_REDIRECT_URL: Env.schema.string(),
-  INVITATION_DEFAULT_EMAIL: Env.schema.string(),
+  CLERK_SIGNUP_URL: Env.schema.string.optional(),
+  INVITATION_REDIRECT_URL: Env.schema.string.optional(),
+  INVITATION_DEFAULT_EMAIL: Env.schema.string.optional(),
 
   /*
   |----------------------------------------------------------
@@ -68,8 +68,8 @@ export default await Env.create(new URL('../', import.meta.url), {
   | Email Configuration
   |----------------------------------------------------------
   */
-  BREVO_API_KEY: Env.schema.string(),
-  BREVO_FROM_EMAIL: Env.schema.string(),
+  BREVO_API_KEY: Env.schema.string.optional(),
+  BREVO_FROM_EMAIL: Env.schema.string.optional(),
 
   /*
   |----------------------------------------------------------
