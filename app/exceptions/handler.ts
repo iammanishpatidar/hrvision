@@ -38,6 +38,20 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       }
     }
 
+    // 🔄 Database pool exhaustion errors
+    if (error.message?.includes('Timeout acquiring a connection') || 
+        error.message?.includes('pool is probably full') ||
+        error.message?.includes('Knex: Timeout')) {
+      return ctx.response.status(503).send({
+        statusCode: 503,
+        message: 'Database connection pool exhausted. The server is experiencing high load.',
+        error: app.inProduction 
+          ? 'Service temporarily unavailable. Please try again in a moment.'
+          : error.message,
+        hint: 'This usually happens when there are too many concurrent database requests. The connection pool has been increased, but you may need to optimize queries or add connection pooling at the database level.',
+      });
+    }
+
     // 🔁 Default error fallback
     return super.handle(error, ctx);
   }

@@ -154,11 +154,13 @@ export default class EmployeeInvitationService {
       });
 
       if (!validation.isValid || !validation.invitation) {
+        await trx.rollback(); // Release transaction on early return
         return { success: false, error: validation.error || 'Invalid invitation' };
       }
 
       const invitation = validation.invitation;
       if (invitation.status !== StatusEnum.INVITED) {
+        await trx.rollback(); // Release transaction on early return
         return { success: false, error: `Invitation already ${invitation.status.toLowerCase()}` };
       }
 
