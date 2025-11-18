@@ -18,6 +18,26 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       });
     }
 
+    // 🔌 Database connection errors
+    if (error.code === 'ENETUNREACH' || error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
+      const isDatabaseError = error.message?.includes('5432') || 
+                              error.message?.includes('postgres') ||
+                              error.message?.includes('database');
+      
+      if (isDatabaseError) {
+        return ctx.response.status(503).send({
+          statusCode: 503,
+          message: 'Database connection failed. Please check your database configuration.',
+          error: app.inProduction 
+            ? 'Database service unavailable' 
+            : error.message,
+          hint: app.inProduction 
+            ? 'Verify DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, and DB_DATABASE environment variables'
+            : `Connection error: ${error.code}. Check if the database is running and accessible.`,
+        });
+      }
+    }
+
     // 🔁 Default error fallback
     return super.handle(error, ctx);
   }
